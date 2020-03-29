@@ -1,17 +1,39 @@
 <template>
  <div>
-   <el-card style="height: 535px">
+   <el-card style="height: 535px;width: 1085px">
      <el-row>
-        <el-col :span="6">
-            <el-avatar style="height:180px;width: 180px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <el-col :span="8">
+            <el-avatar class="el-avatar" :src='img'></el-avatar>
           <el-button class="button">点击上传</el-button>
         </el-col>
-        <el-col :span="12">
-          <div class="info">帐号：</div>
-          <div class="info">昵称：</div>
-          <div class="info">我的头像：</div>
-          <div class="info">我的头像：</div>
-          <div class="info">我的头像：</div>
+        <el-col :span="8">
+          <div class="info" v-show="!change">
+            <div>帐号：{{form.name}}</div>
+            <div>昵称：{{form.val}}</div>
+            <div>性别：{{form.sex}}</div>
+            <div>年龄：{{form.age}}</div>
+            <div>我的钱包：{{form.money}}</div>
+            <el-button style="margin-top: 50px" @click="hand">修改信息</el-button>
+            <el-button style="margin-top: 50px" @click="hand">金钱充值</el-button>
+            <el-button style="margin-top: 50px" @click="hand">身份认证</el-button>
+          </div>
+          <el-form v-show="change" ref="form" :model="form" :label-position="position" label-width="70px">
+            <el-form-item label="昵称：">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="性别：">
+              <el-select v-model="form.sex">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="年龄：">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="hand">完成</el-button>
+            </el-form-item>
+          </el-form>
         </el-col>
      </el-row>
    </el-card>
@@ -19,15 +41,40 @@
 </template>
 
 <script>
-
+export default {
+  data () {
+    return {
+      position: 'left',
+      change: false,
+      img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      form: {
+        name: '姓名',
+        val: '昵称',
+        sex: '性别',
+        age: '年龄',
+        money: '金钱'
+      }
+    }
+  },
+  methods: {
+    hand () {
+      this.change = !this.change
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
-  .info{
+  .info div{
     margin-top: 40px;
+  }
+  .el-avatar{
+    margin-left: 40px;
+    height:180px;
+    width: 180px
   }
   .button{
     margin-top: 20px;
-    margin-left: 40px;
+    margin-left: 80px;
   }
 </style>

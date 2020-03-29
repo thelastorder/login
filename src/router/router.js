@@ -25,6 +25,10 @@ const router = new VueRouter({
           component: resolve => require(['../components/MyCourse.vue'], resolve)
         },
         {
+          path: '/MyCourse_his',
+          component: resolve => require(['../components/MyCourse_his.vue'], resolve)
+        },
+        {
           path: '/Info',
           component: resolve => require(['../components/Info.vue'], resolve)
         },
