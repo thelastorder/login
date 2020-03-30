@@ -24,23 +24,37 @@
           </div>
         </el-tab-pane>
         <el-tab-pane :label="`已读消息(${read.length})`" name="second">
-          <template v-if="message === 'second'">
-            <el-table :data="read" :show-header="false" style="width: 100%">
+        <template v-if="message === 'second'">
+          <el-table :data="read" :show-header="false" style="width: 100%">
+            <el-table-column>
+              <template slot-scope="scope">
+                <span class="message-title">{{scope.row.title}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="date" width="180"></el-table-column>
+            <el-table-column prop="state" width="80"></el-table-column>
+            <el-table-column width="120">
+              <template slot-scope="scope">
+                <el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="handle-row">
+            <el-button type="danger">删除全部</el-button>
+          </div>
+        </template>
+      </el-tab-pane>
+        <el-tab-pane :label="`我的申请(${info.length})`" name="third">
+          <template v-if="message === 'third'">
+            <el-table :data="info" :show-header="false" style="width: 100%">
               <el-table-column>
                 <template slot-scope="scope">
                   <span class="message-title">{{scope.row.title}}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="date" width="180"></el-table-column>
-              <el-table-column width="120">
-                <template slot-scope="scope">
-                  <el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
-                </template>
-              </el-table-column>
+              <el-table-column prop="state" width="120"></el-table-column>
             </el-table>
-            <div class="handle-row">
-              <el-button type="danger">删除全部</el-button>
-            </div>
           </template>
         </el-tab-pane>
       </el-tabs>
@@ -56,13 +70,16 @@ export default {
       message: 'first',
       showHeader: false,
       unread: [{
-        date: '2020-03-19 20:00:00',
-        title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
-      }, {
         date: '2020-03-19 21:00:00',
         title: '学生123向你申请授课'
       }],
       read: [{
+        state: '已拒绝',
+        date: '2020-03-19 20:00:00',
+        title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
+      }],
+      info: [{
+        state: '申请中',
         date: '2020-03-19 20:00:00',
         title: '【系统通知】该系统将于今晚凌晨2点到5点进行升级维护'
       }]

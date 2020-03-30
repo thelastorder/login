@@ -9,7 +9,8 @@
         </el-carousel>
       </el-card>
       <el-card style="margin-top: 10px;height: 180px">
-        <div>当前时间：{{nowTime}}</div>
+        <div>当前时间：</div>
+        <div style="margin-left: 30px;margin-top: 20px">{{nowTime}}</div>
       </el-card>
     </div>
     <div class="card2">
