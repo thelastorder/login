@@ -45,6 +45,9 @@
 export default {
   data () {
     return {
+      form: {
+        username: ''
+      },
       nowTime: '',
       name: '小华',
       age: '18',
@@ -82,9 +85,12 @@ export default {
   async created () {
     this.nowTimes()
     // 请求人员信息
-    // const username = window.sessionStorage.getItem('username')
-    // const result = await this.$http.get('person',username)
-    // this.name = result.data.val
+    this.form.username = window.sessionStorage.getItem('username')
+    const result = await this.$http.post('person', this.form)
+    this.name = result.data.val
+    this.money = result.data.money
+    this.age = result.data.age
+    this.card = result.data.card
   }
 }
 </script>

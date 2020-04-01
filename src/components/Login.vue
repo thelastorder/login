@@ -58,7 +58,7 @@ export default {
           const result = await this.$http.post('login', this.ruleForm)
           if (result.data.code === '200') {
             window.sessionStorage.setItem('token', result.data.token)
-            Window.sessionStorage.setItem('username', this.ruleForm.name)
+            window.sessionStorage.setItem('username', this.ruleForm.name)
             this.$router.push('/home')
           } else {
             return this.$message.error(result.data.message)
