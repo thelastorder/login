@@ -14,14 +14,14 @@
             <div>年龄：{{form.age}}</div>
             <div>我的钱包：{{form.money}}</div>
             <el-button style="margin-top: 50px" @click="hand">修改信息</el-button>
-            <el-button style="margin-top: 50px" @click="hand">金钱充值</el-button>
-            <el-button style="margin-top: 50px" @click="hand">身份认证</el-button>
+            <el-button style="margin-top: 50px" @click="hand2">金钱充值</el-button>
+            <el-button style="margin-top: 50px" @click="hand3">身份认证</el-button>
           </div>
           <el-form v-show="change" ref="form" :model="form" :rules="rules" :label-position="position" label-width="70px">
             <el-form-item label="昵称：" prop="val">
               <el-input v-model="form.val"></el-input>
             </el-form-item>
-            <el-form-item label="性别：">
+            <el-form-item label="性别：" prop="sex">
               <el-select v-model="form.sex">
                 <el-option label="男" value="男"></el-option>
                 <el-option label="女" value="女"></el-option>
@@ -37,11 +37,17 @@
         </el-col>
      </el-row>
    </el-card>
+   <v-promise></v-promise>
  </div>
 </template>
 
 <script>
+import bus from './common/bus'
+import vPromise from './promise'
 export default {
+  components: {
+    vPromise
+  },
   data () {
     return {
       position: 'left',
@@ -58,6 +64,9 @@ export default {
         val: [
           { required: true, message: '请输入昵称', trigger: 'blur' }
         ],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'blur' }
+        ],
         age: [
           { required: true, message: '请输入年龄', trigger: 'blur' }
         ]
@@ -67,6 +76,11 @@ export default {
   methods: {
     hand () {
       this.change = !this.change
+    },
+    hand2 () {
+    },
+    hand3 () {
+      bus.$emit('Visible', true)
     },
     handed (formName) {
       this.$refs[formName].validate((valid) => {
