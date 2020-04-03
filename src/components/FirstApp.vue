@@ -46,10 +46,10 @@ export default {
   data () {
     return {
       form: {
-        username: ''
+        name: ''
       },
       nowTime: '',
-      name: '小华',
+      val: '小华',
       age: '18',
       card: '学生',
       money: '200',
@@ -85,9 +85,9 @@ export default {
   async created () {
     this.nowTimes()
     // 请求人员信息
-    this.form.username = window.sessionStorage.getItem('username')
+    this.form.name = window.sessionStorage.getItem('name')
     const result = await this.$http.post('person', this.form)
-    this.name = result.data.val
+    this.val = result.data.val
     this.money = result.data.money
     this.age = result.data.age
     this.card = result.data.card

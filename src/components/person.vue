@@ -17,9 +17,9 @@
             <el-button style="margin-top: 50px" @click="hand">金钱充值</el-button>
             <el-button style="margin-top: 50px" @click="hand">身份认证</el-button>
           </div>
-          <el-form v-show="change" ref="form" :model="form" :label-position="position" label-width="70px">
-            <el-form-item label="昵称：">
-              <el-input v-model="form.name"></el-input>
+          <el-form v-show="change" ref="form" :model="form" :rules="rules" :label-position="position" label-width="70px">
+            <el-form-item label="昵称：" prop="val">
+              <el-input v-model="form.val"></el-input>
             </el-form-item>
             <el-form-item label="性别：">
               <el-select v-model="form.sex">
@@ -27,11 +27,11 @@
                 <el-option label="女" value="女"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="年龄：">
-              <el-input v-model="form.name"></el-input>
+            <el-form-item label="年龄：" prop="age">
+              <el-input v-model="form.age"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button @click="hand">完成</el-button>
+              <el-button @click="handed('form')">完成</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -48,18 +48,41 @@ export default {
       change: false,
       img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       form: {
-        name: '姓名',
+        name: '帐号',
         val: '昵称',
         sex: '性别',
         age: '年龄',
         money: '金钱'
+      },
+      rules: {
+        val: [
+          { required: true, message: '请输入昵称', trigger: 'blur' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'blur' }
+        ]
       }
     }
   },
   methods: {
     hand () {
       this.change = !this.change
+    },
+    handed (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http.post('person_c', this.form)
+          this.change = !this.change
+        } else {
+          return this.$message.error('修改失败')
+        }
+      })
     }
+  },
+  async created () {
+    this.form.name = window.sessionStorage.getItem('name')
+    const result = await this.$http.post('person', this.form)
+    this.form = result.data
   }
 }
 </script>
