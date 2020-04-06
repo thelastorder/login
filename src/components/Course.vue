@@ -6,7 +6,7 @@
           <el-card shadow="hover" style="height: 80px">
           <el-form ref="form" :model="form" style="width: 100%">
             <el-row>
-              <el-col :span="7">
+              <el-col :span="6">
                 <el-form-item class="el-form-item" label="科目:">
                   <el-select v-model="form.course" placeholder="请选择">
                     <el-option
@@ -17,7 +17,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="7">
+              <el-col :span="6">
                 <el-form-item class="el-form-item" label="年级:">
                   <el-select v-model="form.rank" placeholder="请选择">
                     <el-option
@@ -28,14 +28,15 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="6">
                 <el-form-item class="el-form-item" label="名称:">
-                  <el-input v-model="form.name" style="width: 250px"></el-input>
+                  <el-input v-model="form.name" style="width: 180px"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="2">
+              <el-col :span="6">
                 <el-form-item class="el-form-item">
-                  <el-button @click="quire">查询</el-button>
+                  <el-button @click="quire" :class="{'buttons': !flag }">查询</el-button>
+                  <el-button v-show="flag">上传课程</el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -76,6 +77,7 @@ export default {
     return {
       img: require('../assets/images/shengwu1.jpg'),
       T_name: '李华',
+      flag: false,
       total: 100,
       options: [
         {
@@ -95,6 +97,11 @@ export default {
     }
   },
   methods: {
+    created () {
+      const state = window.sessionStorage.getItem('state')
+      if (state === '1') {
+      }
+    },
     quire () {
       console.log(this.form)
     },
@@ -109,8 +116,11 @@ export default {
     width: 1090px;
     height: 535px;
   }
-  .el-form-item button{
-    margin-left: 20px;
+  .buttons{
+    margin-left: 30px;
+  }
+  .el-select{
+    width: 180px;
   }
   .item-card{
     float: left;

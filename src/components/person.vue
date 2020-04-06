@@ -5,8 +5,9 @@
         <el-col :span="8">
             <el-avatar class="el-avatar" :src='img'></el-avatar>
           <el-button class="button">点击上传</el-button>
+          <div style="margin-left: 70px;margin-top: 40px">身份认证：</div>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" :offset="4">
           <div class="info" v-show="!change">
             <div>帐号：{{form.name}}</div>
             <div>昵称：{{form.val}}</div>
