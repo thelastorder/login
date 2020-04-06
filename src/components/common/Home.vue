@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper">
         <v-head></v-head>
-        <v-sidebar></v-sidebar>
+        <v-sidebar v-show="flag"></v-sidebar>
+        <v-sidebar-t v-show="!flag"></v-sidebar-t>
         <div class="content-box" :class="{'content-collapse':collapse}">
             <div class="content">
                 <transition name="move" mode="out-in">
@@ -15,21 +16,23 @@
 <script>
 import vHead from './Header.vue'
 import vSidebar from './Sidebar.vue'
+import vSidebarT from './Sidebar_teacher'
 import bus from './bus.js'
 export default {
   data () {
     return {
-      tagsList: [],
+      flag: true,
       collapse: false
     }
   },
   components: {
-    vHead, vSidebar
+    vHead, vSidebar, vSidebarT
   },
   created () {
-    // 跳入首页
-    // this.$router.push('/First')
-    // 用来收缩导航栏
+    const state = window.sessionStorage.getItem('state')
+    if (state === '1') {
+      this.flag = false
+    }
     bus.$on('collapse', msg => {
       this.collapse = msg
     })
