@@ -3,7 +3,14 @@
    <el-card style="height: 535px;width: 1085px">
      <el-row>
         <el-col :span="8">
-            <el-avatar class="el-avatar" :src='img'></el-avatar>
+          <el-upload
+            class="avatar-uploader"
+            :action="post"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <el-avatar class="el-avatar" :src='img2'></el-avatar>
+          </el-upload>
           <el-button class="button">点击上传</el-button>
           <div style="margin-left: 70px;margin-top: 40px">身份认证：</div>
         </el-col>
@@ -51,9 +58,11 @@ export default {
   },
   data () {
     return {
+      post: this.$http.defaults.baseURL + 'image',
       position: 'left',
       change: false,
       img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      img2: require('E:/java/新建文件夹/springbootdemo/src/main/resources/static/57941448a1a345eaa5203b2ccd19031e.jpg'),
       form: {
         name: '帐号',
         val: '昵称',
@@ -75,6 +84,22 @@ export default {
     }
   },
   methods: {
+    handleAvatarSuccess (res, file) {
+      this.img = URL.createObjectURL(file.raw)
+    },
+    beforeAvatarUpload (file) {
+      console.log(file)
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
     hand () {
       this.change = !this.change
     },
@@ -106,8 +131,10 @@ export default {
   .info div{
     margin-top: 40px;
   }
+  .avatar-uploader{
+   width: 20px;
+  }
   .el-avatar{
-    margin-left: 40px;
     height:180px;
     width: 180px
   }
