@@ -9,12 +9,12 @@
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <el-avatar class="el-avatar" :src='img2'></el-avatar>
+            <el-avatar class="el-avatar" :src='img'></el-avatar>
           </el-upload>
           <el-button class="button">点击上传</el-button>
           <div style="margin-left: 70px;margin-top: 40px">身份认证：</div>
         </el-col>
-        <el-col :span="8" :offset="4">
+        <el-col :span="8" :offset="2">
           <div class="info" v-show="!change">
             <div>帐号：{{form.name}}</div>
             <div>昵称：{{form.val}}</div>
@@ -62,7 +62,6 @@ export default {
       position: 'left',
       change: false,
       img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-      img2: require('E:/java/新建文件夹/springbootdemo/src/main/resources/static/57941448a1a345eaa5203b2ccd19031e.jpg'),
       form: {
         name: '帐号',
         val: '昵称',
@@ -131,9 +130,11 @@ export default {
   .info div{
     margin-top: 40px;
   }
-  .avatar-uploader{
-   width: 20px;
-  }
+  /deep/ .el-upload--text{
+    width: 180px;
+    border-radius: 50%;
+    margin-left: 40px;
+    }
   .el-avatar{
     height:180px;
     width: 180px

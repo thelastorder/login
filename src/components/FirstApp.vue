@@ -91,6 +91,8 @@ export default {
     this.money = result.data.money
     this.age = result.data.age
     this.card = result.data.card
+    const table = await this.$http.post('myCourse', this.form.name)
+    this.tableData = table.data
   }
 }
 </script>

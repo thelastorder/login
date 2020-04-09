@@ -92,7 +92,8 @@ export default {
       form: {
         course: '',
         rank: '',
-        name: ''
+        name: '',
+        num: ''
       }
     }
   },
@@ -103,9 +104,13 @@ export default {
       }
     },
     quire () {
-      console.log(this.form)
+      const result = this.$http.post('course', this.form)
+      this.total = result.data.length
     },
     handleCurrentChange (val) {
+      console.log(val)
+      this.form.num = val
+      // const res = this.$http.post('course', this.form)
     }
   }
 }
