@@ -18,7 +18,7 @@
         <el-container>
           <el-aside width="200px">
             <el-avatar style="height:120px;width: 120px" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            <div class="name">{{name}}</div>
+            <div class="name">{{form.name}}</div>
           </el-aside>
           <el-main>
             <div class="box-right">
@@ -35,7 +35,7 @@
         <el-table :data="tableData" stripe empty-text="暂无课程" style="width: 100%">
           <el-table-column prop="course" label="课程名称" width="180"></el-table-column>
           <el-table-column prop="Tname" label="授课老师" width="180"></el-table-column>
-          <el-table-column prop="rank" label="课程年级"></el-table-column>
+          <el-table-column prop="ctime" label="剩余课时"></el-table-column>
         </el-table>
       </el-card>
     </div>
@@ -46,6 +46,7 @@ export default {
   data () {
     return {
       form: {
+        id: '',
         name: ''
       },
       nowTime: '',
@@ -91,8 +92,20 @@ export default {
     this.money = result.data.money
     this.age = result.data.age
     this.card = result.data.card
-    const table = await this.$http.post('myCourse', this.form.name)
+
+    if (this.card === 1) {
+      this.card = '学生'
+    } else if (this.card === 2) {
+      this.card = '老师'
+    } else if (this.card === 3) {
+      this.card = '老师'
+    } else if (this.card === 0) {
+      this.card = '管理员'
+    }
+    this.form.id = window.sessionStorage.getItem('pid')
+    const table = await this.$http.post('myCourse', this.form)
     this.tableData = table.data
+    console.log(this.tableData)
   }
 }
 </script>
