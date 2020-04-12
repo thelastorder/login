@@ -8,9 +8,9 @@
             <el-row>
               <el-col :span="6">
                 <el-form-item class="el-form-item" label="科目:">
-                  <el-select v-model="form.course" placeholder="请选择">
+                  <el-select v-model="form.type" placeholder="请选择">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in courseName"
                       :key="item.value"
                       :value="item.value">
                     </el-option>
@@ -19,9 +19,9 @@
               </el-col>
               <el-col :span="6">
                 <el-form-item class="el-form-item" label="年级:">
-                  <el-select v-model="form.rank" placeholder="请选择">
+                  <el-select v-model="form.ranked" placeholder="请选择">
                     <el-option
-                      v-for="item in options"
+                      v-for="item in rankName"
                       :key="item.value"
                       :value="item.value">
                     </el-option>
@@ -44,15 +44,15 @@
             </el-card>
         </el-header>
         <el-main>
-          <div :key="items.value" v-for="items in options">
+          <div :key="items.Cid" v-for="items in options">
             <el-card shadow="hover" class="item-card">
               <el-row>
                 <el-col :span="16">
                   <el-image class="el-image" :src="img"></el-image>
-                  <div style="margin-left: 40px">{{items.value}}</div>
+                  <div style="margin-left: 40px">{{items.name}}</div>
                 </el-col>
                 <el-col :span="8">
-                  <div>{{T_name}}</div>
+                  <div>{{items.teacher}}</div>
                   <el-button style="margin-top: 200px ">申请</el-button>
                 </el-col>
               </el-row>
@@ -77,41 +77,46 @@ export default {
     return {
       img: require('../assets/images/shengwu1.jpg'),
       T_name: '李华',
-      flag: false,
+      flag: '',
       total: 100,
-      options: [
-        {
-          value: '语文'
-        },
-        {
-          value: '数学'
-        },
-        {
-          value: '123'
-        }],
+      options: [],
+      rankName: [
+        { value: '1' }, { value: '2' }, { value: '3' }
+      ],
+      courseName: [
+        { value: '语文' }, { value: '数学' }, { value: '英语' }, { value: '物理' },
+        { value: '地理' }, { value: '生物' }, { value: '政治' }, { value: '化学' }
+      ],
       form: {
-        course: '',
-        rank: '',
+        type: '',
+        ranked: '',
         name: '',
-        num: ''
+        num: '1'
       }
     }
   },
   methods: {
-    created () {
-      const state = window.sessionStorage.getItem('state')
-      if (state === '1') {
-      }
+    async quire () {
+      const number = await this.$http.post('courseNum', this.form)
+      this.total = Math.ceil(number.data / 3) * 10
+      const course = await this.$http.post('course', this.form)
+      this.options = course.data
     },
-    quire () {
-      const result = this.$http.post('course', this.form)
-      this.total = result.data.length
-    },
-    handleCurrentChange (val) {
-      console.log(val)
+    async handleCurrentChange (val) {
       this.form.num = val
-      // const res = this.$http.post('course', this.form)
+      const number = await this.$http.post('courseNum', this.form)
+      this.total = Math.ceil(number.data / 3) * 10
+      const course = await this.$http.post('course', this.form)
+      this.options = course.data
     }
+  },
+  async created () {
+    const state = window.sessionStorage.getItem('card')
+    this.flag = state === '2'
+    const number = await this.$http.post('courseNum', this.form)
+    this.total = Math.ceil(number.data / 3) * 10
+    const course = await this.$http.post('course', this.form)
+    this.options = course.data
   }
 }
 </script>

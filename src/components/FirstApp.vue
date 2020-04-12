@@ -33,8 +33,8 @@
     <div class="card2">
       <el-card style="height:350px">
         <el-table :data="tableData" stripe empty-text="暂无课程" style="width: 100%">
-          <el-table-column prop="course" label="课程名称" width="180"></el-table-column>
-          <el-table-column prop="Tname" label="授课老师" width="180"></el-table-column>
+          <el-table-column prop="cname" label="课程名称" width="180"></el-table-column>
+          <el-table-column prop="tname" label="授课老师" width="180"></el-table-column>
           <el-table-column prop="ctime" label="剩余课时"></el-table-column>
         </el-table>
       </el-card>
@@ -102,7 +102,6 @@ export default {
     } else if (this.card === 0) {
       this.card = '管理员'
     }
-    this.form.id = window.sessionStorage.getItem('pid')
     const table = await this.$http.post('myCourse', this.form)
     this.tableData = table.data
     console.log(this.tableData)
