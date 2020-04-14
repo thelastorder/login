@@ -29,8 +29,8 @@ export default {
     vHead, vSidebar, vSidebarT
   },
   created () {
-    const state = window.sessionStorage.getItem('state')
-    if (state === '1') {
+    const state = window.sessionStorage.getItem('card')
+    if (state === '2') {
       this.flag = false
     }
     bus.$on('collapse', msg => {

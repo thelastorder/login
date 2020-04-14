@@ -36,7 +36,7 @@
               <el-col :span="6">
                 <el-form-item class="el-form-item">
                   <el-button @click="quire" :class="{'buttons': !flag }">查询</el-button>
-                  <el-button v-show="flag">上传课程</el-button>
+                  <el-button v-show="flag" @click="VisibleCourse">上传课程</el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -44,6 +44,7 @@
             </el-card>
         </el-header>
         <el-main>
+          <v-upload-course></v-upload-course>
           <div :key="items.Cid" v-for="items in options">
             <el-card shadow="hover" class="item-card">
               <el-row>
@@ -72,7 +73,12 @@
 </template>
 
 <script>
+import bus from './common/bus'
+import vUploadCourse from './uploadCourse'
 export default {
+  components: {
+    vUploadCourse
+  },
   data () {
     return {
       img: require('../assets/images/shengwu1.jpg'),
@@ -96,6 +102,9 @@ export default {
     }
   },
   methods: {
+    VisibleCourse () {
+      bus.$emit('VisibleCourse', true)
+    },
     async quire () {
       const number = await this.$http.post('courseNum', this.form)
       this.total = Math.ceil(number.data / 3) * 10
@@ -112,7 +121,7 @@ export default {
   },
   async created () {
     const state = window.sessionStorage.getItem('card')
-    this.flag = state === '2'
+    this.flag = state === '1'
     const number = await this.$http.post('courseNum', this.form)
     this.total = Math.ceil(number.data / 3) * 10
     const course = await this.$http.post('course', this.form)
