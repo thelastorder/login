@@ -8,11 +8,11 @@
               <el-row>
                 <el-col :span="16">
                   <el-image class="el-image" :src="img"></el-image>
-                  <div>{{items.value}}</div>
+                  <div>{{items.Cname}}</div>
                 </el-col>
                 <el-col :span="8">
-                  <div>李华</div>
-                  <el-button style="margin-top: 200px ">预约</el-button>
+                  <div >{{items.Tname}}</div>
+                  <div class="text">已完成</div>
                 </el-col>
               </el-row>
             </el-card>
@@ -36,24 +36,24 @@ export default {
     return {
       total: 100,
       img: require('../assets/images/shengwu1.jpg'),
-      options: [
-        {
-          value: '语文'
-        },
-        {
-          value: '数学'
-        },
-        {
-          value: '111'
-        }],
+      options: [],
       form: {
-        course: ''
+        name: '',
+        active: '1',
+        number: '1'
       }
     }
   },
   methods: {
     handleCurrentChange (val) {
     }
+  },
+  async created () {
+    this.form.name = window.sessionStorage.getItem('name')
+    const number = await this.$http.post('myCourseNum', this.form)
+    this.total = Math.ceil(number.data / 3) * 10
+    const course = await this.$http.post('myCourseInfo', this.form)
+    this.options = course.data
   }
 }
 </script>
@@ -73,6 +73,9 @@ export default {
   .el-image{
     width: 150px;
     height: 220px;
+  }
+  .text{
+    margin-top: 20px;
   }
   .foot{
     width: 250px;

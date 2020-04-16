@@ -54,7 +54,7 @@
                 </el-col>
                 <el-col :span="8">
                   <div>{{items.teacher}}</div>
-                  <el-button style="margin-top: 200px ">申请</el-button>
+                  <el-button style="margin-top: 200px " @click="apply(items)">申请</el-button>
                 </el-col>
               </el-row>
             </el-card>
@@ -104,6 +104,10 @@ export default {
   methods: {
     VisibleCourse () {
       bus.$emit('VisibleCourse', true)
+    },
+    apply (item) {
+      item.username = window.sessionStorage.getItem('name')
+      this.$http.post('applyCourse', item)
     },
     async quire () {
       const number = await this.$http.post('courseNum', this.form)

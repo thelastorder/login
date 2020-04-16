@@ -2,7 +2,7 @@
   <div >
     <div class="container">
       <el-tabs v-model="message">
-        <el-tab-pane :label="`未读消息(${unread.length})`" name="first">
+        <el-tab-pane :label="`未处理消息(${unread.length})`" name="first">
           <el-table :data="unread" :show-header="false" style="width: 100%">
             <el-table-column>
               <template slot-scope="scope">
@@ -23,7 +23,7 @@
             <el-button type="primary" @click="handleReadAll">全部标为已读</el-button>
           </div>
         </el-tab-pane>
-        <el-tab-pane :label="`已读消息(${read.length})`" name="second">
+        <el-tab-pane :label="`已处理消息(${read.length})`" name="second">
         <template v-if="message === 'second'">
           <el-table :data="read" :show-header="false" style="width: 100%">
             <el-table-column>
@@ -64,7 +64,6 @@
 
 <script>
 export default {
-  name: 'tabs',
   data () {
     return {
       message: 'first',
@@ -98,6 +97,16 @@ export default {
       const item = this.read.splice(index, 1)
       console.log(item)
     }
+  },
+  async created () {
+    const name = window.sessionStorage.getItem('name')
+    await this.$http.get('info', {
+      params: {
+        name: name
+      }
+    }).then(res => {
+      console.log(res)
+    })
   },
   computed: {
   }
