@@ -12,7 +12,7 @@
             <el-avatar class="el-avatar" :src='img'></el-avatar>
           </el-upload>
           <el-button class="button">点击上传</el-button>
-          <div style="margin-left: 70px;margin-top: 40px">身份认证：</div>
+          <div style="margin-left: 70px;margin-top: 40px">身份认证：学生</div>
         </el-col>
         <el-col :span="8" :offset="2">
           <div class="info" v-show="!change">

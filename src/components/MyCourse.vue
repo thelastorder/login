@@ -13,7 +13,7 @@
                 <el-col :span="8">
                   <div >{{items.Tname}}</div>
                   <div class="text">剩余课时:{{items.Ctime}}</div>
-                  <el-button style="margin-top: 150px ">预约</el-button>
+                  <el-button style="margin-top: 150px " @click="Dialog(items)">预约</el-button>
                 </el-col>
               </el-row>
             </el-card>
@@ -28,6 +28,17 @@
         </el-footer>
       </el-container>
     </el-card>
+    <el-dialog title="选择预约时间" :visible.sync="dialogFormVisible" width="300px" top="15%">
+      <el-date-picker
+        v-model="value1"
+        type="datetime"
+        placeholder="选择日期时间">
+      </el-date-picker>
+      <span slot="footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="order">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,9 +46,12 @@
 export default {
   data () {
     return {
+      dialogFormVisible: false,
       total: 100,
+      value1: '',
       img: require('../assets/images/shengwu1.jpg'),
       options: [],
+      item: [],
       form: {
         name: '',
         active: '0',
@@ -47,6 +61,16 @@ export default {
   },
   methods: {
     handleCurrentChange (val) {
+      console.log(val)
+    },
+    Dialog (items) {
+      this.dialogFormVisible = true
+      this.item = items
+    },
+    order () {
+      this.item.times = this.value1
+      console.log(this.item)
+      this.dialogFormVisible = false
     }
   },
   async created () {

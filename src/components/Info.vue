@@ -70,7 +70,13 @@ export default {
       showHeader: false,
       unread: [{
         date: '2020-03-19 21:00:00',
-        title: '学生123向你申请授课'
+        title: '学生张三向你申请授课'
+      }, {
+        date: '2020-03-19 21:00:00',
+        title: '学生李四向你申请授课'
+      }, {
+        date: '2020-03-19 21:00:00',
+        title: '学生王五向你申请授课'
       }],
       read: [{
         state: '已拒绝',

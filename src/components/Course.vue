@@ -87,7 +87,7 @@ export default {
       total: 100,
       options: [],
       rankName: [
-        { value: '1' }, { value: '2' }, { value: '3' }
+        { value: '' }, { value: '1' }, { value: '2' }, { value: '3' }
       ],
       courseName: [
         { value: '语文' }, { value: '数学' }, { value: '英语' }, { value: '物理' },
