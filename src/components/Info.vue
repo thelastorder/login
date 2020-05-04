@@ -49,11 +49,17 @@
             <el-table :data="info" :show-header="false" style="width: 100%">
               <el-table-column>
                 <template slot-scope="scope">
-                  <span class="message-title">{{scope.row.title}}</span>
+                  <span class="message-title">向{{scope.row.nowName}}申请的{{scope.row.cname}}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="date" width="180"></el-table-column>
-              <el-table-column prop="state" width="120"></el-table-column>
+              <el-table-column prop="time" width="180"></el-table-column>
+              <el-table-column width="120">
+                <template slot-scope="scope">
+                  <div v-if="scope.row.state==0">申请中</div>
+                  <div v-else-if="scope.row.state==1">已同意</div>
+                  <div v-else-if="scope.row.state==2">被拒绝</div>
+                </template>
+              </el-table-column>
             </el-table>
           </template>
         </el-tab-pane>
@@ -111,7 +117,7 @@ export default {
         name: name
       }
     }).then(res => {
-      console.log(res)
+      this.info = res.data
     })
   },
   computed: {

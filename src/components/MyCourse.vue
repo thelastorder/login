@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { formatDate } from './common/date'
 export default {
   data () {
     return {
@@ -67,9 +68,10 @@ export default {
       this.dialogFormVisible = true
       this.item = items
     },
-    order () {
-      this.item.times = this.value1
-      console.log(this.item)
+    async order () {
+      const time = formatDate(this.value1, 'yyyy-MM-dd hh:mm')
+      this.item.ordertime = time
+      await this.$http.post('orderCourse', this.item)
       this.dialogFormVisible = false
     }
   },

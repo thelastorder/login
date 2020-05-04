@@ -75,6 +75,7 @@
 <script>
 import bus from './common/bus'
 import vUploadCourse from './uploadCourse'
+import { formatDate } from './common/date'
 export default {
   components: {
     vUploadCourse
@@ -107,6 +108,7 @@ export default {
     },
     apply (item) {
       item.username = window.sessionStorage.getItem('name')
+      item.time = formatDate(new Date(), 'yyyy-MM-dd hh:mm')
       this.$http.post('applyCourse', item)
     },
     async quire () {
