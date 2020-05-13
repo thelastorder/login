@@ -33,6 +33,7 @@ export default {
     if (state === '2') {
       this.flag = false
     }
+    this.$router.push('/First')
     bus.$on('collapse', msg => {
       this.collapse = msg
     })

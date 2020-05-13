@@ -35,6 +35,14 @@ const router = new VueRouter({
         {
           path: '/First',
           component: resolve => require(['../components/FirstApp.vue'], resolve)
+        },
+        {
+          path: '/video',
+          component: resolve => require(['../components/video.vue'], resolve)
+        },
+        {
+          path: '/personManager',
+          component: resolve => require(['../components/personManager.vue'], resolve)
         }]
     }
   ]

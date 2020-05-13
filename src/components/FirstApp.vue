@@ -33,8 +33,8 @@
     <div class="card2">
       <el-card style="height:350px">
         <el-table :data="tableData" stripe empty-text="暂无课程" style="width: 100%">
-          <el-table-column prop="cname" label="课程名称" width="180"></el-table-column>
-          <el-table-column prop="tname" label="授课老师" width="180"></el-table-column>
+          <el-table-column prop="cname" label="课程名称" width="100"></el-table-column>
+          <el-table-column prop="tname" label="授课老师" width="100"></el-table-column>
           <el-table-column prop="ordertime" label="上课时间"></el-table-column>
         </el-table>
       </el-card>

@@ -72,6 +72,16 @@ export default {
           icon: 'el-icon-menu',
           index: 'person',
           title: '个人中心'
+        },
+        {
+          icon: 'el-icon-menu',
+          index: 'personManager',
+          title: '用户管理'
+        },
+        {
+          icon: 'el-icon-menu',
+          index: 'video',
+          title: '线上课程'
         }
       ]
     }
