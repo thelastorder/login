@@ -1,13 +1,41 @@
 <template>
   <div class="card2">
     <el-card style="height:500px">
-      <div class='demo'>
-        <video-player class="video-player vjs-custom-skin"
-                      ref="videoPlayer"
-                      :playsinline="true"
-                      :options="playerOptions">
-        </video-player>
-      </div>
+      <el-container>
+        <el-main>
+          <div :key="items.value" v-for="items in options">
+            <el-card shadow="hover" class="item-card">
+              <el-row>
+                <el-col :span="14">
+                  <el-image v-if="items.Cname=='生物'" class="el-image" :src="img1"></el-image>
+                  <el-image v-else class="el-image" :src="img2"></el-image>
+                  <div>{{items.Cname}}</div>
+                </el-col>
+                <el-col :span="10">
+                  <div >{{items.Tname}}</div>
+                  <el-button style="margin-top: 160px;margin-left: 20px " @click="Dialog()">视频播放</el-button>
+                </el-col>
+              </el-row>
+            </el-card>
+          </div>
+        </el-main>
+        <el-footer>
+          <el-pagination class="foot"
+                         @current-change="handleCurrentChange"
+                         background layout="prev, pager, next"
+                         :total="total">
+          </el-pagination>
+        </el-footer>
+      </el-container>
+      <el-dialog title="视频播放" :visible.sync="dialogFormVisible">
+        <div class='demo'>
+          <video-player class="video-player vjs-custom-skin"
+                        ref="videoPlayer"
+                        :playsinline="true"
+                        :options="playerOptions">
+          </video-player>
+        </div>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -15,6 +43,20 @@
 export default {
   data () {
     return {
+      total: 100,
+      dialogFormVisible: false,
+      img1: require('../assets/images/shengwu1.jpg'),
+      img2: require('../assets/images/yuwen2.jpg'),
+      options: [{
+        Cname: '语文',
+        Tname: '老师'
+      }, {
+        Cname: '生物',
+        Tname: '老师'
+      }, {
+        Cname: '语文',
+        Tname: '老师'
+      }],
       playerOptions: {
         // 播放速度
         playbackRates: [0.5, 1.0, 1.5, 2.0],
@@ -52,12 +94,33 @@ export default {
     }
   },
   methods: {
+    Dialog () {
+      this.dialogFormVisible = true
+    },
+    handleCurrentChange (val) {
+      console.log(val)
+    }
   }
 }
 </script>
 
 <style scoped>
-
+  .item-card{
+    float: left;
+    margin-left: 0px;
+    margin-top: 20px;
+    width: 330px;
+    height: 300px;
+  }
+  .el-image{
+    width: 150px;
+    height: 220px;
+  }
+  .foot{
+    width: 250px;
+    margin-left: 300px;
+    margin-top: 30px;
+  }
   .card2{
     margin-top: 10px;
     margin-left: 10px;

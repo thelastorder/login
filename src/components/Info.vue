@@ -6,15 +6,15 @@
           <el-table :data="unread" :show-header="false" style="width: 100%">
             <el-table-column>
               <template slot-scope="scope">
-                <span class="message-title">{{scope.row.title}}</span>
+                <span class="message-title">{{scope.row.nowName}}申请的{{scope.row.cname}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="date" width="180"></el-table-column>
+            <el-table-column prop="time" width="180"></el-table-column>
             <el-table-column width="180">
               <template slot-scope="scope">
                 <el-row>
                   <el-button size="small" type="primary" @click="handleRead(scope.$index)">同意</el-button>
-                  <el-button size="small" type="danger" @click="handleRead(scope.$index)">拒绝</el-button>
+                  <el-button size="small" type="danger" @click="handleReadB(scope.$index)">拒绝</el-button>
                 </el-row>
               </template>
             </el-table-column>
@@ -28,11 +28,17 @@
           <el-table :data="read" :show-header="false" style="width: 100%">
             <el-table-column>
               <template slot-scope="scope">
-                <span class="message-title">{{scope.row.title}}</span>
+                <span class="message-title">{{scope.row.nowName}}申请的{{scope.row.cname}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="date" width="180"></el-table-column>
-            <el-table-column prop="state" width="80"></el-table-column>
+            <el-table-column prop="time" width="180"></el-table-column>
+            <el-table-column width="120">
+              <template slot-scope="scope">
+                <div v-if="scope.row.state==0">申请中</div>
+                <div v-else-if="scope.row.state==1">已同意</div>
+                <div v-else-if="scope.row.state==2">被拒绝</div>
+              </template>
+            </el-table-column>
             <el-table-column width="120">
               <template slot-scope="scope">
                 <el-button type="danger" @click="handleDel(scope.$index)">删除</el-button>
@@ -99,6 +105,12 @@ export default {
   methods: {
     handleRead (index) {
       const item = this.unread.splice(index, 1)
+      item[0].state = 1
+      this.read = item.concat(this.read)
+    },
+    handleReadB (index) {
+      const item = this.unread.splice(index, 1)
+      item[0].state = 2
       this.read = item.concat(this.read)
     },
     handleReadAll () {
@@ -118,6 +130,20 @@ export default {
       }
     }).then(res => {
       this.info = res.data
+    })
+    await this.$http.get('infoUnread', {
+      params: {
+        name: name
+      }
+    }).then(res => {
+      this.unread = res.data
+    })
+    await this.$http.get('infoRead', {
+      params: {
+        name: name
+      }
+    }).then(res => {
+      this.read = res.data
     })
   },
   computed: {

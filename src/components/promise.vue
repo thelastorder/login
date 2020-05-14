@@ -1,5 +1,5 @@
 <template>
-  <el-dialog class="dialog" title="注册界面" :visible.sync="Visible">
+  <el-dialog class="dialog" title="身份认证" :visible.sync="Visible">
     <el-form :model="Form" :rules="rules" ref="Form" :label-position="position" label-width="70px">
       <el-form-item prop="name" label="姓名">
         <el-input v-model="Form.name">
@@ -52,10 +52,10 @@ export default {
     submit (form) {
       this.$refs[form].validate(async (valid) => {
         if (valid) {
-          await this.$http.post('register', this.Form)
+          // await this.$http.post('register', this.Form)
           this.Visible = false
         } else {
-          return this.$message.error('注册失败')
+          return this.$message.error('认证失败')
         }
       })
     },

@@ -49,7 +49,8 @@
             <el-card shadow="hover" class="item-card">
               <el-row>
                 <el-col :span="16">
-                  <el-image class="el-image" :src="img"></el-image>
+                  <el-image v-if="items.type=='生物'" class="el-image" :src="img1"></el-image>
+                  <el-image v-else class="el-image" :src="img2"></el-image>
                   <div style="margin-left: 40px">{{items.name}}</div>
                 </el-col>
                 <el-col :span="8">
@@ -82,7 +83,8 @@ export default {
   },
   data () {
     return {
-      img: require('../assets/images/shengwu1.jpg'),
+      img1: require('../assets/images/shengwu1.jpg'),
+      img2: require('../assets/images/yuwen2.jpg'),
       T_name: '李华',
       flag: '',
       total: 100,
@@ -90,7 +92,7 @@ export default {
       rankName: [
         { value: '' }, { value: '1' }, { value: '2' }, { value: '3' }
       ],
-      courseName: [
+      courseName: [{ value: '' },
         { value: '语文' }, { value: '数学' }, { value: '英语' }, { value: '物理' },
         { value: '地理' }, { value: '生物' }, { value: '政治' }, { value: '化学' }
       ],
@@ -110,6 +112,10 @@ export default {
       item.username = window.sessionStorage.getItem('name')
       item.time = formatDate(new Date(), 'yyyy-MM-dd hh:mm')
       this.$http.post('applyCourse', item)
+      this.$message({
+        message: '申请成功',
+        type: 'success'
+      })
     },
     async quire () {
       const number = await this.$http.post('courseNum', this.form)

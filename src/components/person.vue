@@ -9,7 +9,7 @@
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <el-avatar class="el-avatar" :src='img'></el-avatar>
+            <el-avatar class="el-avatar" :src='form.picture'></el-avatar>
           </el-upload>
           <el-button class="button">点击上传</el-button>
           <div style="margin-left: 70px;margin-top: 40px">身份认证：学生</div>
@@ -61,13 +61,13 @@ export default {
       post: this.$http.defaults.baseURL + 'image',
       position: 'left',
       change: false,
-      img: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       form: {
         name: '帐号',
         val: '昵称',
         sex: '性别',
         age: '年龄',
-        money: '金钱'
+        money: '金钱',
+        picture: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
       },
       rules: {
         val: [
@@ -84,10 +84,11 @@ export default {
   },
   methods: {
     handleAvatarSuccess (res, file) {
-      this.img = URL.createObjectURL(file.raw)
+      this.form.picture = URL.createObjectURL(file.raw)
+      // this.form.picture = require(res)
+      // this.$http.post('person_update', this.form)
     },
     beforeAvatarUpload (file) {
-      console.log(file)
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 2
 
